@@ -1,9 +1,9 @@
 <?php
 
-namespace ePub;
+namespace ePub\Definition;
 
-use ePub\Metadata;
-use ePub\Manifest\ManifestItem;
+use ePub\Definition\Metadata;
+use ePub\Definition\ManifestItem;
 
 class Manifest
 {

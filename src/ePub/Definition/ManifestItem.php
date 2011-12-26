@@ -1,6 +1,6 @@
 <?php
 
-namespace ePub\Manifest;
+namespace ePub\Definition;
 
 class ManifestItem
 {

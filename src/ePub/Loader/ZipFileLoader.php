@@ -3,9 +3,9 @@
 namespace ePub\Loader;
 
 use ePub\Resource\ZipFileResource;
-use ePub\Manifest;
-use ePub\Manifest\ManifestItem;
-use ePub\Metadata;
+use ePub\Definition\Manifest;
+use ePub\Definition\ManifestItem;
+use ePub\Definition\Metadata;
 
 class ZipFileLoader
 {
@@ -14,8 +14,8 @@ class ZipFileLoader
     public function load($file)
     {
         $this->metadata = new Metadata();
-        
-        $resource = new ZipFileResource($file); 
+
+        $resource = new ZipFileResource($file);
 
         $package = $resource->getXML('META-INF/container.xml');
 

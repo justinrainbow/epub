@@ -12,7 +12,7 @@ class Reader
 	{
 		$this->loader = new ZipFileLoader();
 	}
-	
+
 	public function load($file)
 	{
 		return $this->loader->load($file);

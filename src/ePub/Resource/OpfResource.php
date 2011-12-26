@@ -3,19 +3,87 @@
 namespace ePub\Resource;
 
 use SimpleXMLElement;
+use ePub\NamespaceRegistry;
+use ePub\Definition\Package;
+use ePub\Definition\Metadata;
+use ePub\Definition\Manifest;
 
 class OpfResource
 {
+    protected $metadataTags = array(
+        'require' => array(
+            'dc' => array('title', 'identifier', 'language'),
+        ),
+
+        'optional' => array(
+            'dc' => array(
+                'creator', 'description', 'contributor', 'publisher',
+                'subject', 'date', 'type', 'format', 'soure',
+                'relation', 'coverage', 'rights'
+            )
+        )
+    );
+
     private $xml;
+
+    private $namespaces;
 
     public function __construct($data)
     {
         if ($data instanceof SimpleXMLElement) {
-        	$this->xml = $data;
+            $this->xml = $data;
         } else if (is_string($data)) {
-        	$this->xml = simplexml_load_string($data);
+            $this->xml = simplexml_load_string($data);
         } else {
-        	throw new \RuntimeException(sprintf('Invalid data type for OpfResource'));
+            throw new \RuntimeException(sprintf('Invalid data type for OpfResource'));
         }
+
+        $this->namespaces = $this->xml->getNamespaces(true);
+    }
+
+    public function bind(Package $package = null)
+    {
+        $package = $package ?: new Package();
+
+        $this->bindMetadata($this->xml->metadata, $package->metadata);
+
+        return $package;
+    }
+
+    private function bindMetadata(\SimpleXMLElement $xml, Metadata $metadata)
+    {
+        foreach ($xml->children(NamespaceRegistry::NAMESPACE_DC) as $child) {
+            $name = $child->getName();
+
+            $item = $this->xmlToArray($child);
+
+            if (isset($metadata->{$name})) {
+                $first = $metadata->{$name};
+
+                if (isset($first[0]) && is_array($first[0])) {
+                    $metadata->{$name}[] = $item;
+                } else {
+                    $metadata->{$name} = array($first, $item);
+                }
+            } else {
+                $metadata->{$name} = $item;
+            }
+        }
+    }
+
+    private function xmlToArray($xml)
+    {
+        $attributes = array();
+        foreach ($this->namespaces as $prefix => $namespace) {
+            foreach ($xml->attributes($namespace) as $attr => $value) {
+                if ($prefix !== "") {
+                    $attr = "{$prefix}:{$attr}";
+                }
+
+                $attributes[$attr] = $value;
+            }
+        }
+
+        return array('value' => (string) $xml, 'attributes' => $attributes);
     }
 }
