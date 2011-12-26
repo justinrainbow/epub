@@ -16,6 +16,7 @@ class OpfResourceTest extends BaseTest
         $package = $opf->bind();
 
         $this->assertTrue($package->metadata->has('title'));
+        $this->assertEquals('Epub Format Construction Guide', $package->metadata->get('title'));
 	}
 
     public function testLoadingInvalidOpenPackagingFormatFile()

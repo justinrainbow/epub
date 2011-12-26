@@ -6,18 +6,23 @@ use ePub\Definition\ManifestItem;
 
 class Metadata
 {
-    public $identifier;
+    private $data = array();
 
-    public $title;
-
-    public $publisher;
+    private $attrs = array();
 
     public function has($name)
     {
-        if (null === $this->{$name}) {
-            return false;
-        }
+        return array_key_exists($name, $this->data);
+    }
 
-        return true;
+    public function get($name)
+    {
+        return $this->data[$name];
+    }
+
+    public function set($name, $value, $attrs = null)
+    {
+        $this->attrs[$name] = $attrs;
+        $this->data[$name] = $value;
     }
 }

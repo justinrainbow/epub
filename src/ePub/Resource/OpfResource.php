@@ -55,23 +55,14 @@ class OpfResource
         foreach ($xml->children(NamespaceRegistry::NAMESPACE_DC) as $child) {
             $name = $child->getName();
 
-            $item = $this->xmlToArray($child);
+            $item  = trim((string) $child);
+            $attrs = $this->getXmlAttributes($child);
 
-            if (isset($metadata->{$name})) {
-                $first = $metadata->{$name};
-
-                if (isset($first[0]) && is_array($first[0])) {
-                    $metadata->{$name}[] = $item;
-                } else {
-                    $metadata->{$name} = array($first, $item);
-                }
-            } else {
-                $metadata->{$name} = $item;
-            }
+            $metadata->set($name, $item, $attrs);
         }
     }
 
-    private function xmlToArray($xml)
+    private function getXmlAttributes($xml)
     {
         $attributes = array();
         foreach ($this->namespaces as $prefix => $namespace) {
