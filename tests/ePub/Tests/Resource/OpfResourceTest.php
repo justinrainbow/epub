@@ -13,23 +13,29 @@ namespace ePub\Tests\Resource;
 
 use ePub\Tests\BaseTest;
 use ePub\Resource\OpfResource;
+use ePub\Definition\Metadata;
+use ePub\Definition\Manifest;
 
 class OpfResourceTest extends BaseTest
 {
 	public function testLoadingValidOpenPackagingFormatFile()
 	{
-		$fixture = $this->getFixturePath('basic/OEPS/content.opf');
+		$fixture = $this->getFixture('basic/OEPS/content.opf');
 
-		$opf = new OpfResource(file_get_contents($fixture));
+		$opf = new OpfResource($fixture);
 
         $package = $opf->bind();
 
-        $this->assertTrue($package->metadata->has('title'));
-        $this->assertEquals('Epub Format Construction Guide', $package->metadata->get('title'));
+        $metadata = $package->getMetadata();
+        $this->assertTrue($metadata instanceof Metadata);
+        $this->assertTrue($metadata->has('title'));
+        $this->assertEquals('Epub Format Construction Guide', $metadata->get('title'));
+
+        $manifest = $package->getManifest();
+        $this->assertTrue($manifest instanceof Manifest);
+        $this->assertEquals(
+            array("ncx", "css", "logo", "title", "contents", "intro", "part1", "part2", "part3", "part4", "specs"),
+            $manifest->keys()
+        );
 	}
-
-    public function testLoadingInvalidOpenPackagingFormatFile()
-    {
-
-    }
 }

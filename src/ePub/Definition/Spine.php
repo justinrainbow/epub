@@ -14,15 +14,8 @@ namespace ePub\Definition;
 use ePub\Definition\Metadata;
 use ePub\Definition\ManifestItem;
 
-class Spine
+class Spine extends Collection
 {
-	private $items;
-
-	public function __construct()
-	{
-		$this->items = array();
-	}
-
 	public function add(ManifestItem $item)
 	{
 		if (isset($this->items[$item->id])) {
@@ -30,10 +23,5 @@ class Spine
 		}
 
 		$this->items[$item->id] = $item;
-	}
-
-	public function get($id)
-	{
-		return $this->items[$id];
 	}
 }

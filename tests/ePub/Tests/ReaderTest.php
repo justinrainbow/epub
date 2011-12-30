@@ -29,7 +29,7 @@ class ReaderTest extends BaseTest
 		$epub = $reader->load($fixture);
 
 		$dedication = $epub->manifest->get('dedication');
-		$expected = file_get_contents($this->getFixturePath('the-velveteen-rabbit/' . $dedication->href));
+		$expected = $this->getFixture('the-velveteen-rabbit/' . $dedication->href);
 		$this->assertEquals($expected, $dedication->getContent());
 	}
 }

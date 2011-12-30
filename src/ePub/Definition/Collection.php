@@ -11,17 +11,38 @@
 
 namespace ePub\Definition;
 
-use ePub\Definition\Metadata;
 use ePub\Definition\ManifestItem;
 
-class Manifest extends Collection
+abstract class Collection
 {
-	public function add(ManifestItem $item)
+    protected $items;
+
+    public function __construct()
+    {
+        $this->items = array();
+    }
+
+    public function add(ManifestItem $item)
     {
         if (isset($this->items[$item->id])) {
             throw new \RuntimeException(sprintf('Attempting to add a duplicate ManifestItem "%s"', $item->id));
         }
 
         $this->items[$item->id] = $item;
+    }
+
+    public function get($id)
+    {
+        return $this->items[$id];
+    }
+
+    public function keys()
+    {
+        return array_keys($this->items);
+    }
+
+    public function all()
+    {
+        return $this->items;
     }
 }

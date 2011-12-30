@@ -14,15 +14,8 @@ namespace ePub\Definition;
 use ePub\Definition\Metadata;
 use ePub\Definition\ManifestItem;
 
-class Guide
+class Guide extends Collection
 {
-	private $items;
-
-	public function __construct()
-	{
-		$this->items = array();
-	}
-
 	public function add(GuideItem $item)
 	{
 		if (isset($this->items[$item->type])) {
@@ -33,10 +26,5 @@ class Guide
 		}
 
 		$this->items[$item->type] = $item;
-	}
-
-	public function get($id)
-	{
-		return $this->items[$id];
 	}
 }
