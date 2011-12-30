@@ -17,6 +17,10 @@ use ePub\Definition\Package;
 use ePub\Definition\Metadata;
 use ePub\Definition\Manifest;
 use ePub\Definition\ManifestItem;
+use ePub\Definition\Spine;
+use ePub\Definition\Guide;
+use ePub\Definition\GuideItem;
+
 
 class OpfResource
 {
@@ -59,6 +63,11 @@ class OpfResource
 
         $this->bindMetadata($this->xml->metadata, $package->metadata);
         $this->bindManifest($this->xml->manifest, $package->manifest);
+        $this->bindSpine($this->xml->spine, $package->spine, $package->manifest);
+
+        if ($this->xml->guide) {
+            $this->bindGuide($this->xml->guide, $package->guide);
+        }
 
         return $package;
     }
@@ -85,15 +94,33 @@ class OpfResource
             $item->type     = (string) $child['media-type'];
             $item->fallback = (string) $child['fallback'];
 
-            if (null !== $this->resource) {
-                $resource = $this->resource;
-
-                $item->setContent(function () use ($item, $resource) {
-                    return $resource->get($item->href);
-                });
-            }
+            $this->addContentGetter($item);
 
             $manifest->add($item);
+        }
+    }
+
+    private function bindSpine(\SimpleXMLElement $xml, Spine $spine, Manifest $manifest)
+    {
+        foreach ($xml->itemref as $child) {
+            $id = (string) $child['idref'];
+
+            $spine->add($manifest->get($id));
+        }
+    }
+
+    private function bindGuide(\SimpleXMLElement $xml, Guide $guide)
+    {
+        foreach ($xml->reference as $child) {
+            $item = new GuideItem();
+
+            $item->title = (string) $child['title'];
+            $item->type  = (string) $child['type'];
+            $item->href  = (string) $child['href'];
+
+            $this->addContentGetter($item);
+
+            $guide->add($item);
         }
     }
 
@@ -111,5 +138,16 @@ class OpfResource
         }
 
         return array('value' => (string) $xml, 'attributes' => $attributes);
+    }
+
+    private function addContentGetter($item)
+    {
+        if (null !== $this->resource) {
+            $resource = $this->resource;
+
+            $item->setContent(function () use ($item, $resource) {
+                return $resource->get($item->href);
+            });
+        }
     }
 }

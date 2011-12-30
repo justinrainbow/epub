@@ -19,12 +19,15 @@ use ePub\Definition\Metadata;
 
 class ZipFileLoader
 {
-    private $metadata;
-
+    /**
+     * Reads in a ePub file and builds the Package definition
+     *
+     * @param string $file
+     *
+     * @return \ePub\Definition\Package
+     */
     public function load($file)
     {
-        $this->metadata = new Metadata();
-
         $resource = new ZipFileResource($file);
 
         $package = $resource->getXML('META-INF/container.xml');

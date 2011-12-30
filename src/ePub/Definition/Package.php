@@ -27,5 +27,27 @@ class Package
     {
         $this->manifest = new Manifest();
         $this->metadata = new Metadata();
+        $this->spine    = new Spine();
+        $this->guide    = new Guide();
+    }
+
+    public function getMetadata()
+    {
+        return $this->metadata;
+    }
+
+    public function getManifest()
+    {
+        return $this->manifest;
+    }
+
+    public function getSpine()
+    {
+        return $this->spine;
+    }
+
+    public function getGuide()
+    {
+        return $this->guide;
     }
 }

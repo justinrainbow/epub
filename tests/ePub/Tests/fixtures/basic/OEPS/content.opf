@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" 
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid"
    version="2.0">
 
    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -26,27 +26,27 @@
    </metadata>
 
    <manifest>
-      <item id="ncx"      href="toc.ncx"                 
+      <item id="ncx"      href="toc.ncx"
          media-type="application/x-dtbncx+xml" />
-      <item id="css"      href="EpubGuide.css"           
+      <item id="css"      href="EpubGuide.css"
          media-type="text/css" />
-      <item id="logo"     href="hxa7241-logo.svg"         
+      <item id="logo"     href="hxa7241-logo.svg"
          media-type="image/svg+xml" />
-      <item id="title"    href="EpubGuide-title.html"    
+      <item id="title"    href="EpubGuide-title.html"
          media-type="application/xhtml+xml" />
-      <item id="contents" href="EpubGuide-contents.html" 
+      <item id="contents" href="EpubGuide-contents.html"
          media-type="application/xhtml+xml" />
-      <item id="intro"    href="EpubGuide-intro.html"    
+      <item id="intro"    href="EpubGuide-intro.html"
          media-type="application/xhtml+xml" />
-      <item id="part1"    href="EpubGuide-1.html"        
+      <item id="part1"    href="EpubGuide-1.html"
          media-type="application/xhtml+xml" />
-      <item id="part2"    href="EpubGuide-2.html"        
+      <item id="part2"    href="EpubGuide-2.html"
          media-type="application/xhtml+xml" />
-      <item id="part3"    href="EpubGuide-3.html"        
+      <item id="part3"    href="EpubGuide-3.html"
          media-type="application/xhtml+xml" />
-      <item id="part4"    href="EpubGuide-4.html"        
+      <item id="part4"    href="EpubGuide-4.html"
          media-type="application/xhtml+xml" />
-      <item id="specs"    href="EpubGuide-specs.html"    
+      <item id="specs"    href="EpubGuide-specs.html"
          media-type="application/xhtml+xml" />
    </manifest>
 
@@ -62,11 +62,11 @@
    </spine>
 
    <guide>
-      <reference type="title-page" title="Title Page"        
+      <reference type="title-page" title="Title Page"
          href="EpubGuide-title.html" />
-      <reference type="toc"        title="Table of Contents" 
+      <reference type="toc"        title="Table of Contents"
          href="EpubGuide-contents.html" />
-      <reference type="text"       title="Text"              
+      <reference type="text"       title="Text"
          href="EpubGuide-intro.html" />
    </guide>
 
