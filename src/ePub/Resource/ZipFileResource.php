@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the ePub Reader package
+ *
+ * (c) Justin Rainbow <justin.rainbow@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace ePub\Resource;
 
 use ZipArchive;
@@ -10,7 +19,7 @@ class ZipFileResource
 
 	public function __construct($file)
 	{
-		$this->zipFile = new \ZipArchive(); 
+		$this->zipFile = new \ZipArchive();
 
         $this->zipFile->open($file);
 	}
@@ -29,11 +38,11 @@ class ZipFileResource
     {
         $result = array();
 
-        for ($i = 0; $i < $this->zipFile->numFiles; $i++){ 
-            $item = $this->zipFile->statIndex($i); 
-            
+        for ($i = 0; $i < $this->zipFile->numFiles; $i++){
+            $item = $this->zipFile->statIndex($i);
+
             $result[] = $item['name'];
-        } 
+        }
 
         return $result;
     }
