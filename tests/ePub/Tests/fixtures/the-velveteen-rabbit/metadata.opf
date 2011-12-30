@@ -1,0 +1,37 @@
+<package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="bookid">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:title>The Velveteen Rabbit or How Toys Become Real</dc:title>
+        <dc:creator opf:file-as="Williams, Margery" opf:role="aut">Margery Williams</dc:creator>
+        <dc:creator opf:file-as="Nicholson, William" opf:role="ill">William Nicholson</dc:creator>
+        <dc:language>en-US</dc:language>
+        <dc:identifier id="bookid">Spontaneous Derivation [2008.12.10-21:02:00]</dc:identifier>
+        <dc:rights>Public Domain</dc:rights>
+    </metadata>
+    <manifest>
+        <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+
+        <item id="titlepage" href="content/title.html" media-type="application/xhtml+xml"/>
+        <item id="dedication" href="content/dedication.html" media-type="application/xhtml+xml"/>
+        <item id="listillustrations" href="content/list-illustrations.html" media-type="application/xhtml+xml"/>
+        <item id="text" href="content/text.html" media-type="application/xhtml+xml"/>
+        <item id="credits" href="content/credits.html" media-type="application/xhtml+xml"/>
+        
+        <item id="stylesheet" href="content/stylesheet.css" media-type="text/css"/>
+        
+        <item id="image_1" href="content/images/christmas-morning.jpg" media-type="image/jpeg"/>
+        <item id="image_2" href="content/images/anxious-times.jpg" media-type="image/jpeg"/>
+        <item id="image_3" href="content/images/at-last.jpg" media-type="image/jpeg"/>
+        <item id="image_4" href="content/images/fairy-flower.jpg" media-type="image/jpeg"/>
+        <item id="image_5" href="content/images/skin-horse.jpg" media-type="image/jpeg"/>
+        <item id="image_6" href="content/images/spring-time.jpg" media-type="image/jpeg"/>
+        <item id="image_7" href="content/images/summer-days.jpg" media-type="image/jpeg"/>
+        <item id="image_8" href="content/images/capital-t.jpg" media-type="image/jpeg"/>
+    </manifest>
+    <spine toc="ncx">
+        <itemref idref="titlepage"/>
+        <itemref idref="dedication"/>
+        <itemref idref="listillustrations"/>
+        <itemref idref="text"/>
+        <itemref idref="credits"/>
+    </spine>
+</package>

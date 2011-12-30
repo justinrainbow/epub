@@ -31,4 +31,9 @@ class Manifest
 
 		$this->items[$item->id] = $item;
 	}
+
+	public function get($id)
+	{
+		return $this->items[$id];
+	}
 }

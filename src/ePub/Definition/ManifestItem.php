@@ -20,4 +20,22 @@ class ManifestItem
 	public $type;
 
 	public $fallback;
+
+	private $content;
+
+	public function setContent($content)
+	{
+		$this->content = $content;
+	}
+
+	public function getContent()
+	{
+		if (is_callable($this->content)) {
+			$func = $this->content;
+
+			$this->content = $func();
+		}
+
+		return $this->content;
+	}
 }

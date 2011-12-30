@@ -17,6 +17,8 @@ class ZipFileResource
 {
 	private $zipFile;
 
+    private $cwd;
+
 	public function __construct($file)
 	{
 		$this->zipFile = new \ZipArchive();
@@ -24,8 +26,17 @@ class ZipFileResource
         $this->zipFile->open($file);
 	}
 
+    public function setDirectory($dir)
+    {
+        $this->cwd = $dir;
+    }
+
     public function get($name)
     {
+        if (null !== $this->cwd) {
+            $name = $this->cwd . '/' . $name;
+        }
+
         return $this->zipFile->getFromName($name);
     }
 
