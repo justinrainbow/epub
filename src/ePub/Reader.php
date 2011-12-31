@@ -15,15 +15,15 @@ use ePub\Loader\ZipFileLoader;
 
 class Reader
 {
-	private $loader;
+    private $loader;
 
-	public function __construct()
-	{
-		$this->loader = new ZipFileLoader();
-	}
+    public function __construct()
+    {
+        $this->loader = new ZipFileLoader();
+    }
 
-	public function load($file)
-	{
-		return $this->loader->load($file);
-	}
+    public function load($file)
+    {
+        return $this->loader->load($file);
+    }
 }

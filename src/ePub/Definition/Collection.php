@@ -26,9 +26,10 @@ abstract class Collection
     {
         $id = $item->getIdentifier();
 
+        /* Not sure if an exception is really best here... maybe just don't overwrite data?
         if (isset($this->items[$id])) {
-            throw new \RuntimeException(sprintf('Attempting to add a duplicate %s "%s"', $id));
-        }
+            throw new \RuntimeException(sprintf('Attempting to add a duplicate %s "%s"', get_class($item), $id));
+        } */
 
         $this->items[$id] = $item;
     }

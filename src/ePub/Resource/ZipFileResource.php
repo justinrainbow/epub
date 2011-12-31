@@ -15,16 +15,16 @@ use ZipArchive;
 
 class ZipFileResource
 {
-	private $zipFile;
+    private $zipFile;
 
     private $cwd;
 
-	public function __construct($file)
-	{
-		$this->zipFile = new \ZipArchive();
+    public function __construct($file)
+    {
+        $this->zipFile = new \ZipArchive();
 
         $this->zipFile->open($file);
-	}
+    }
 
     public function setDirectory($dir)
     {

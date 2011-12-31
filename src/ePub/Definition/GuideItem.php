@@ -13,32 +13,32 @@ namespace ePub\Definition;
 
 class GuideItem implements ItemInterface
 {
-	public $href;
+    public $href;
 
-	public $type;
+    public $type;
 
-	public $title;
+    public $title;
 
-	private $content;
+    private $content;
 
-	public function getIdentifier()
-	{
-		return $this->type;
-	}
+    public function getIdentifier()
+    {
+        return $this->type;
+    }
 
-	public function setContent($content)
-	{
-		$this->content = $content;
-	}
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
 
-	public function getContent()
-	{
-		if (is_callable($this->content)) {
-			$func = $this->content;
+    public function getContent()
+    {
+        if (is_callable($this->content)) {
+            $func = $this->content;
 
-			$this->content = $func();
-		}
+            $this->content = $func();
+        }
 
-		return $this->content;
-	}
+        return $this->content;
+    }
 }

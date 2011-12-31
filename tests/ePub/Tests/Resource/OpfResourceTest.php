@@ -18,11 +18,11 @@ use ePub\Definition\Manifest;
 
 class OpfResourceTest extends BaseTest
 {
-	public function testLoadingValidOpenPackagingFormatFile()
-	{
-		$fixture = $this->getFixture('basic/OEPS/content.opf');
+    public function testLoadingValidOpenPackagingFormatFile()
+    {
+        $fixture = $this->getFixture('basic/OEPS/content.opf');
 
-		$opf = new OpfResource($fixture);
+        $opf = new OpfResource($fixture);
 
         $package = $opf->bind();
 
@@ -37,5 +37,5 @@ class OpfResourceTest extends BaseTest
             array("ncx", "css", "logo", "title", "contents", "intro", "part1", "part2", "part3", "part4", "specs"),
             $manifest->keys()
         );
-	}
+    }
 }

@@ -13,5 +13,5 @@ namespace ePub\Definition;
 
 interface ItemInterface
 {
-	function getIdentifier();
+    function getIdentifier();
 }

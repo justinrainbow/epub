@@ -16,20 +16,31 @@ use ePub\Reader;
 
 class ReaderTest extends BaseTest
 {
-	public function testBasicIntstantiation()
-	{
-		$this->assertTrue(new Reader instanceof Reader);
-	}
+    public function testBasicIntstantiation()
+    {
+        $this->assertTrue(new Reader instanceof Reader);
+    }
 
-	public function testLoadingEpubFile()
-	{
-		$fixture = $this->getFixturePath('the_velveteen_rabbit.epub');
+    public function testLoadingEpubFile()
+    {
+        $fixture = $this->getFixturePath('the_velveteen_rabbit.epub');
 
-		$reader = new Reader();
-		$epub = $reader->load($fixture);
+        $reader = new Reader();
+        $epub = $reader->load($fixture);
 
-		$dedication = $epub->manifest->get('dedication');
-		$expected = $this->getFixture('the-velveteen-rabbit/' . $dedication->href);
-		$this->assertEquals($expected, $dedication->getContent());
-	}
+        $this->assertTrue($epub instanceof \ePub\Definition\Package);
+    }
+
+    public function testReadingManifestItemContent()
+    {
+        $fixture = $this->getFixturePath('the_velveteen_rabbit.epub');
+
+        $reader = new Reader();
+        $epub   = $reader->load($fixture);
+
+        $manifest   = $epub->getManifest();
+        $dedication = $manifest->get('dedication');
+        $expected   = $this->getFixture('the-velveteen-rabbit/' . $dedication->href);
+        $this->assertEquals($expected, $dedication->getContent());
+    }
 }
