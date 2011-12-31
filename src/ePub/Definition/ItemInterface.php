@@ -11,9 +11,7 @@
 
 namespace ePub\Definition;
 
-use ePub\Definition\Metadata;
-use ePub\Definition\ManifestItem;
-
-class Spine extends Collection
+interface ItemInterface
 {
+	function getIdentifier();
 }

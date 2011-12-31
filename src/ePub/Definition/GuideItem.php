@@ -11,7 +11,7 @@
 
 namespace ePub\Definition;
 
-class GuideItem
+class GuideItem implements ItemInterface
 {
 	public $href;
 
@@ -20,6 +20,11 @@ class GuideItem
 	public $title;
 
 	private $content;
+
+	public function getIdentifier()
+	{
+		return $this->type;
+	}
 
 	public function setContent($content)
 	{

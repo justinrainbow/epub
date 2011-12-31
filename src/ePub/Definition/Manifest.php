@@ -16,12 +16,4 @@ use ePub\Definition\ManifestItem;
 
 class Manifest extends Collection
 {
-	public function add(ManifestItem $item)
-    {
-        if (isset($this->items[$item->id])) {
-            throw new \RuntimeException(sprintf('Attempting to add a duplicate ManifestItem "%s"', $item->id));
-        }
-
-        $this->items[$item->id] = $item;
-    }
 }

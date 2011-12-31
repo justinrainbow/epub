@@ -22,13 +22,15 @@ abstract class Collection
         $this->items = array();
     }
 
-    public function add(ManifestItem $item)
+    public function add(ItemInterface $item)
     {
-        if (isset($this->items[$item->id])) {
-            throw new \RuntimeException(sprintf('Attempting to add a duplicate ManifestItem "%s"', $item->id));
+        $id = $item->getIdentifier();
+
+        if (isset($this->items[$id])) {
+            throw new \RuntimeException(sprintf('Attempting to add a duplicate %s "%s"', $id));
         }
 
-        $this->items[$item->id] = $item;
+        $this->items[$id] = $item;
     }
 
     public function get($id)

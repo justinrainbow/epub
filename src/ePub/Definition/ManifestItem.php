@@ -11,7 +11,9 @@
 
 namespace ePub\Definition;
 
-class ManifestItem
+use ePub\Definition\ItemInterface;
+
+class ManifestItem implements ItemInterface
 {
 	public $id;
 
@@ -22,6 +24,11 @@ class ManifestItem
 	public $fallback;
 
 	private $content;
+
+	public function getIdentifier()
+	{
+		return $this->id;
+	}
 
 	public function setContent($content)
 	{
