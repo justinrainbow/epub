@@ -14,6 +14,7 @@ namespace ePub\Definition;
 use ePub\Definition\Metadata;
 use ePub\Definition\ManifestItem;
 use ePub\Exception\DuplicateItemException;
+use ePub\Exception\InvalidArgumentException;
 
 class Manifest extends Collection
 {
@@ -25,8 +26,15 @@ class Manifest extends Collection
     /**
      * {@inheritDoc}
      */
-    public function add(ManifestItem $item)
+    public function add(ItemInterface $item)
     {
+        if (!($item instanceof ManifestItem)) {
+            throw new InvalidArgumentException(sprintf(
+                'Expected instance of ePub\Definition\ManifestItem, got %s',
+                get_class($item)
+            ));
+        }
+
         $id = $item->getIdentifier();
 
         $href = $item->href;
