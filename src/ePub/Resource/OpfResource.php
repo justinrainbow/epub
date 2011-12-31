@@ -24,20 +24,6 @@ use ePub\Definition\GuideItem;
 
 class OpfResource
 {
-    protected $metadataTags = array(
-        'require' => array(
-            'dc' => array('title', 'identifier', 'language'),
-        ),
-
-        'optional' => array(
-            'dc' => array(
-                'creator', 'description', 'contributor', 'publisher',
-                'subject', 'date', 'type', 'format', 'soure',
-                'relation', 'coverage', 'rights'
-            )
-        )
-    );
-
     private $xml;
 
     private $namespaces;
@@ -47,7 +33,7 @@ class OpfResource
         if ($data instanceof SimpleXMLElement) {
             $this->xml = $data;
         } else if (is_string($data)) {
-            $this->xml = simplexml_load_string($data);
+            $this->xml = new \SimpleXMLElement($data);
         } else {
             throw new \RuntimeException(sprintf('Invalid data type for OpfResource'));
         }
@@ -60,19 +46,20 @@ class OpfResource
     public function bind(Package $package = null)
     {
         $package = $package ?: new Package();
+        $xml     = $this->xml;
 
-        $this->bindMetadata($this->xml->metadata, $package->metadata);
-        $this->bindManifest($this->xml->manifest, $package->manifest);
-        $this->bindSpine($this->xml->spine, $package->spine, $package->manifest);
+        $this->processMetadataElement($xml->metadata, $package->metadata);
+        $this->processManifestElement($xml->manifest, $package->manifest);
+        $this->processSpineElement($xml->spine, $package->spine, $package->manifest);
 
-        if ($this->xml->guide) {
-            $this->bindGuide($this->xml->guide, $package->guide);
+        if ($xml->guide) {
+            $this->processGuideElement($xml->guide, $package->guide);
         }
 
         return $package;
     }
 
-    private function bindMetadata(\SimpleXMLElement $xml, Metadata $metadata)
+    private function processMetadataElement(\SimpleXMLElement $xml, Metadata $metadata)
     {
         foreach ($xml->children(NamespaceRegistry::NAMESPACE_DC) as $child) {
             $name = $child->getName();
@@ -84,7 +71,7 @@ class OpfResource
         }
     }
 
-    private function bindManifest(\SimpleXmlElement $xml, Manifest $manifest)
+    private function processManifestElement(\SimpleXmlElement $xml, Manifest $manifest)
     {
         foreach ($xml->item as $child) {
             $item = new ManifestItem();
@@ -100,7 +87,7 @@ class OpfResource
         }
     }
 
-    private function bindSpine(\SimpleXMLElement $xml, Spine $spine, Manifest $manifest)
+    private function processSpineElement(\SimpleXMLElement $xml, Spine $spine, Manifest $manifest)
     {
         foreach ($xml->itemref as $child) {
             $id = (string) $child['idref'];
@@ -109,7 +96,7 @@ class OpfResource
         }
     }
 
-    private function bindGuide(\SimpleXMLElement $xml, Guide $guide)
+    private function processGuideElement(\SimpleXMLElement $xml, Guide $guide)
     {
         foreach ($xml->reference as $child) {
             $item = new GuideItem();
@@ -124,6 +111,27 @@ class OpfResource
         }
     }
 
+    /**
+     * Builds an array from XML attributes
+     *
+     * For instance:
+     *
+     *   <tag
+     *       xmlns:opf="http://www.idpf.org/2007/opf"
+     *       opf:file-as="Some Guy"
+     *       id="name"/>
+     *
+     * Will become:
+     *
+     *   array('opf:file-as' => 'Some Guy', 'id' => 'name')
+     *
+     * **NOTE**: Namespaced attributes will have the namespace prefix
+     *           prepended to the attribute name
+     *
+     * @param \SimpleXMLElement $xml The XML tag to grab attributes from
+     *
+     * @return array
+     */
     private function getXmlAttributes($xml)
     {
         $attributes = array();
