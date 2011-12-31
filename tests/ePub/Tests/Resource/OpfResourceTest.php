@@ -29,7 +29,7 @@ class OpfResourceTest extends BaseTest
         $metadata = $package->getMetadata();
         $this->assertTrue($metadata instanceof Metadata);
         $this->assertTrue($metadata->has('title'));
-        $this->assertEquals('Epub Format Construction Guide', $metadata->get('title'));
+        $this->assertEquals('Epub Format Construction Guide', $metadata->getValue('title'));
 
         $manifest = $package->getManifest();
         $this->assertTrue($manifest instanceof Manifest);

@@ -34,6 +34,11 @@ abstract class Collection
         $this->items[$id] = $item;
     }
 
+    public function has($id)
+    {
+        return array_key_exists($id, $this->items);
+    }
+
     public function get($id)
     {
         return $this->items[$id];

@@ -11,27 +11,40 @@
 
 namespace ePub\Definition;
 
-use ePub\Definition\ManifestItem;
+use ePub\Definition\MetadataItem;
+use ePub\Exception\InvalidArgumentException;
+use ePub\Exception\OutOfBoundsException;
 
-class Metadata
+class Metadata extends Collection
 {
-    private $data = array();
-
-    private $attrs = array();
-
-    public function has($name)
+    public function add(ItemInterface $item)
     {
-        return array_key_exists($name, $this->data);
+        if (!($item instanceof MetadataItem)) {
+            throw new InvalidArgumentException(sprintf(
+                'Expected instance of ePub\Definition\MetadataItem, got %s',
+                get_class($item)
+            ));
+        }
+
+        $id = $item->getIdentifier();
+
+        if (!isset($this->items[$id])) {
+            $this->items[$id] = array();
+        }
+
+        $this->items[$id][] = $item;
     }
 
-    public function get($name)
+    public function getValue($id)
     {
-        return $this->data[$name];
-    }
+        $item = $this->get($id);
 
-    public function set($name, $value, $attrs = null)
-    {
-        $this->attrs[$name] = $attrs;
-        $this->data[$name] = $value;
+        if (isset($item[0]) && $item[0] instanceof MetadataItem) {
+            return $item[0]->value;
+        }
+
+        throw new OutOfBoundsException(
+            "No value could be found for item: " . json_encode($id)
+        );
     }
 }

@@ -15,6 +15,7 @@ use SimpleXMLElement;
 use ePub\NamespaceRegistry;
 use ePub\Definition\Package;
 use ePub\Definition\Metadata;
+use ePub\Definition\MetadataItem;
 use ePub\Definition\Manifest;
 use ePub\Definition\ManifestItem;
 use ePub\Definition\Spine;
@@ -85,12 +86,13 @@ class OpfResource
     private function processMetadataElement(SimpleXMLElement $xml, Metadata $metadata)
     {
         foreach ($xml->children(NamespaceRegistry::NAMESPACE_DC) as $child) {
-            $name = $child->getName();
+            $item = new MetadataItem();
 
-            $item  = trim((string) $child);
-            $attrs = $this->getXmlAttributes($child);
+            $item->name = $child->getName();
+            $item->value = trim((string) $child);
+            $item->attributes = $this->getXmlAttributes($child);
 
-            $metadata->set($name, $item, $attrs);
+            $metadata->add($item);
         }
     }
 
