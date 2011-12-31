@@ -38,4 +38,12 @@ class OpfResourceTest extends BaseTest
             $manifest->keys()
         );
     }
+
+    /**
+     * @expectedException \ePub\Exception\InvalidArgumentException
+     */
+    public function testInvalidOpenPackagingFormatInput()
+    {
+        new OpfResource(null);
+    }
 }

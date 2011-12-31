@@ -20,22 +20,38 @@ use ePub\Definition\ManifestItem;
 use ePub\Definition\Spine;
 use ePub\Definition\Guide;
 use ePub\Definition\GuideItem;
+use ePub\Exception\InvalidArgumentException;
 
 
 class OpfResource
 {
+    /**
+     * @var \SimpleXMLElement
+     */
     private $xml;
 
+    /**
+     * Array of XML namespaces found in document
+     *
+     * @var array
+     */
     private $namespaces;
 
+    /**
+     * Constructor
+     *
+     * @param \SimpleXMLElement|string $data
+     * @param ZipFileResource $resource
+     * @throws InvalidArgumentException
+     */
     public function __construct($data, ZipFileResource $resource = null)
     {
         if ($data instanceof SimpleXMLElement) {
             $this->xml = $data;
         } else if (is_string($data)) {
-            $this->xml = new \SimpleXMLElement($data);
+            $this->xml = new SimpleXMLElement($data);
         } else {
-            throw new \RuntimeException(sprintf('Invalid data type for OpfResource'));
+            throw new InvalidArgumentException(sprintf('Invalid data type for OpfResource'));
         }
 
         $this->resource = $resource;
@@ -43,6 +59,13 @@ class OpfResource
         $this->namespaces = $this->xml->getNamespaces(true);
     }
 
+    /**
+     * Processes the XML data and puts the data into a Package object
+     *
+     * @param Package $package
+     *
+     * @return Package
+     */
     public function bind(Package $package = null)
     {
         $package = $package ?: new Package();
@@ -59,7 +82,7 @@ class OpfResource
         return $package;
     }
 
-    private function processMetadataElement(\SimpleXMLElement $xml, Metadata $metadata)
+    private function processMetadataElement(SimpleXMLElement $xml, Metadata $metadata)
     {
         foreach ($xml->children(NamespaceRegistry::NAMESPACE_DC) as $child) {
             $name = $child->getName();
@@ -71,7 +94,7 @@ class OpfResource
         }
     }
 
-    private function processManifestElement(\SimpleXmlElement $xml, Manifest $manifest)
+    private function processManifestElement(SimpleXmlElement $xml, Manifest $manifest)
     {
         foreach ($xml->item as $child) {
             $item = new ManifestItem();
@@ -87,7 +110,7 @@ class OpfResource
         }
     }
 
-    private function processSpineElement(\SimpleXMLElement $xml, Spine $spine, Manifest $manifest)
+    private function processSpineElement(SimpleXMLElement $xml, Spine $spine, Manifest $manifest)
     {
         foreach ($xml->itemref as $child) {
             $id = (string) $child['idref'];
@@ -96,7 +119,7 @@ class OpfResource
         }
     }
 
-    private function processGuideElement(\SimpleXMLElement $xml, Guide $guide)
+    private function processGuideElement(SimpleXMLElement $xml, Guide $guide)
     {
         foreach ($xml->reference as $child) {
             $item = new GuideItem();
@@ -145,7 +168,7 @@ class OpfResource
             }
         }
 
-        return array('value' => (string) $xml, 'attributes' => $attributes);
+        return $attributes;
     }
 
     private function addContentGetter($item)
