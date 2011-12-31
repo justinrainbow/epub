@@ -1,5 +1,5 @@
 {
-	"name": "justinrainbow/epub-reader",
+	"name": "justinrainbow/epub",
 	"require": {
 		"php":      ">=5.3.2"
 	},
