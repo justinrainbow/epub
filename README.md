@@ -1,4 +1,4 @@
-# ePub lib for PHP [![Build Status](https://secure.travis-ci.org/justinrainbow/epub.png)](http://travis-ci.org/justinrainbow/epub)
+# ePub lib for PHP - ![project status](http://stillmaintained.com/justinrainbow/epub.png) - [![Build Status](https://secure.travis-ci.org/justinrainbow/epub.png)](http://travis-ci.org/justinrainbow/epub)
 
 ## Installation
 
