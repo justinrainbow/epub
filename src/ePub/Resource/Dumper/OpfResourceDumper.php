@@ -71,15 +71,19 @@ EOT
 			foreach ($items as $item) {
 				// $child = $document->createElementNS(NamespaceRegistry::NAMESPACE_DC, $item->name, $item->value);
 				$child = $document->createElement(sprintf('%s:%s', NamespaceRegistry::PREFIX_DC, $item->name), $item->value);
+				
+				if ($item->name === 'identifier') {
+					$child->setAttribute('id', 'dcidid');
+				}
 
 				foreach ($item->attributes as $attrName => $attrValue) {
 					// if (false !== $pos = strpos($attrName, ':')) {
 					// 	$nsPrefix = substr($attrName, 0, $pos);
-					// 	$attrName = substr($attrName, $post + 1);
+					// 	$attrName = substr($attrName, $pos + 1);
 
-					// 	$namespace = constant('NamespaceRegistry::NAMESPACE_' . strtoupper($nsPrefix));
+					// 	$namespace = constant('ePub\NamespaceRegistry::NAMESPACE_' . strtoupper($nsPrefix));
 
-					// 	$item->setAttributeNS($namespace, $attrName, $attrValue);
+					// 	$child->setAttributeNS($namespace, $attrName, $attrValue);
 					// } else {
 						$child->setAttribute($attrName, $attrValue);
 					// }
@@ -132,6 +136,13 @@ EOT
 
 			$node->appendChild($child);
 		}
+
+		return $node;
+	}
+
+	private function appendGuideElement(\DOMDocument $document, Guide $guide)
+	{
+		$node = $document->createElement('guide');
 
 		return $node;
 	}
