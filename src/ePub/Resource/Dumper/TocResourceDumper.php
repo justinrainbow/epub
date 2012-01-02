@@ -107,7 +107,7 @@ EOT
 			$child->setAttribute('playOrder', $index);
 			
 			$label = $document->createElement('navLabel');
-			$text  = $document->createElement('text', basename($item->href, '.html'));
+			$text  = $document->createElement('text', $this->extractPageTitle($item->getContent()) ?: basename($item->href, '.html'));
 			$label->appendChild($text);
 			$child->appendChild($label);
 			
@@ -122,5 +122,15 @@ EOT
 
 
 		return $node;
+	}
+	
+	private function extractPageTitle($html)
+	{
+		$dom = new \DOMDocument('1.0');
+		@$dom->loadHTML($html);
+		
+		$title = $dom->getElementsByTagName('title')->item(0);
+		
+		return $title ? $title->nodeValue : false;
 	}
 }
