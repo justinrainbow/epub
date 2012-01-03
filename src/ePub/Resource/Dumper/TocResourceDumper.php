@@ -164,6 +164,10 @@ EOT
 		
 		if ($headers) {
 			foreach ($headers as $node) {
+				// only add 2nd level headers
+				if (!preg_match('/^\d+\.\d+$/', $node->nodeValue)) {
+					continue;
+				}
 				$ref = $node->getAttribute('id');
 				$title = $node->nextSibling->nodeValue;
 				
