@@ -102,18 +102,7 @@ EOT
 				continue;
 			}
 			
-			$child = $document->createElement('navPoint');
-			$child->setAttribute('id', sprintf('navpoint-%d', $index));
-			$child->setAttribute('playOrder', $index);
-			
-			$label = $document->createElement('navLabel');
-			$text  = $document->createElement('text', basename($item->href, '.html'));
-			$label->appendChild($text);
-			$child->appendChild($label);
-			
-			$content = $document->createElement('content');
-			$content->setAttribute('src', $item->href);
-			$child->appendChild($content);
+			$child = $this->createNavPoint($document, $item, $index);
 			
 			$index++;
 
@@ -122,5 +111,74 @@ EOT
 
 
 		return $node;
+	}
+	
+	private function createNavPoint(\DOMDocument $document, ManifestItem $item, &$index)
+	{
+		$child = $document->createElement('navPoint');
+		$child->setAttribute('id', sprintf('navpoint-%d', $index));
+		$child->setAttribute('playOrder', $index);
+		
+		
+		$dom = new \DOMDocument('1.0');
+		@$dom->loadHTML($item->getContent());
+		
+		$title = $dom->getElementsByTagName('title')->item(0);
+		if (!$title) {
+			$title = basename($item->href, '.html');
+		} else {
+			$title = $title->nodeValue;
+		}
+			
+		$label = $document->createElement('navLabel');
+		$text  = $document->createElement('text', $title);
+		$label->appendChild($text);
+		$child->appendChild($label);
+			
+		$content = $document->createElement('content');
+		$content->setAttribute('src', $item->href);
+		$child->appendChild($content);
+		
+		
+		$xpath = new \DOMXPath($dom);
+		
+		$headers = $xpath->query('//h3/a[@id]');
+			
+		$createNavPoint = function ($id, $class, $title, $src, $playOrder) use ($document) {
+			$child = $document->createElement('navPoint');
+			$child->setAttribute('id', $id);
+			$child->setAttribute('class', $class);
+			$child->setAttribute('playOrder', $playOrder);
+			
+			$label = $document->createElement('navLabel');
+			$text  = $document->createElement('text', $title);
+			$label->appendChild($text);
+			$child->appendChild($label);
+			
+			$content = $document->createElement('content');
+			$content->setAttribute('src', $src);
+			$child->appendChild($content);
+			
+			return $child;
+		};
+		
+		if ($headers) {
+			foreach ($headers as $node) {
+				$ref = $node->getAttribute('id');
+				$title = $node->nextSibling->nodeValue;
+				
+				$child->appendChild(
+					$createNavPoint(
+						str_replace('.', '_', $ref),
+						'h2',
+						$title,
+						sprintf('%s#%s', $item->href, $ref),
+						++$index
+					)
+				);
+			}
+		}
+		
+		return $child;
 	}
 }
