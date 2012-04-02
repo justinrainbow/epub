@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>ePub by justinrainbow</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/justinrainbow/epub">Fork On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/justinrainbow/epub/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/justinrainbow/epub/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>ePub</h1>
+          <p>A PHP ePub reader / writer</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/justinrainbow">justinrainbow</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/mattgraham">mattgraham</a></span>
+        </div>
+
+        <h1>ePub lib for PHP</h1>
+
+<h2>Installation</h2>
+
+<h3>Composer (preferred)</h3>
+
+<p>Add <code>justinrainbow/epub</code> to your <code>composer.json</code> file.</p>
+
+<div class="highlight">
+<pre><span class="p">{</span>
+    <span class="s2">"require"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"justinrainbow/epub"</span><span class="o">:</span> <span class="s2">"master-dev"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+</div>
+
+
+<p>Then just run the <code>composer.phar install</code> (or <code>composer.phar update</code> if
+you added this to an existing <code>composer.json</code> file).</p>
+
+<div class="highlight">
+<pre>wget <a href="http://getcomposer.org/composer.phar">http://getcomposer.org/composer.phar</a>
+php composer.phar install
+</pre>
+</div>
+
+
+<h3>Symfony2 Deps</h3>
+
+<p>Add the following to your <code>deps</code> file</p>
+
+<div class="highlight">
+<pre><span class="k">[epub]</span>
+    <span class="na">git</span><span class="o">=</span><span class="s"><a href="http://github.com/justinrainbow/epub.git">http://github.com/justinrainbow/epub.git</a></span>
+</pre>
+</div>
+
+
+<p>After you have run the <code>bin/vendors install</code> script, add the following
+to your <code>autoload.php</code> file.</p>
+
+<div class="highlight">
+<pre><span class="cp">&lt;?php</span>
+
+<span class="nv">$loader</span><span class="o">-&gt;</span><span class="na">registerNamespaces</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+    <span class="c1">// ... other namespaces ...</span>
+    <span class="s1">'ePub'</span>  <span class="o">=&gt;</span>  <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">'/../vendor/epub/src'</span>
+<span class="p">));</span>
+</pre>
+</div>
+
+
+<h2>Usage</h2>
+
+<div class="highlight">
+<pre><span class="cp">&lt;?php</span>
+
+<span class="nv">$reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\ePub\Reader</span><span class="p">();</span>
+<span class="nv">$epub</span> <span class="o">=</span> <span class="nv">$reader</span><span class="o">-&gt;</span><span class="na">load</span><span class="p">(</span><span class="s1">'my-book.epub'</span><span class="p">);</span>
+
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"Title: %s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$epub</span><span class="o">-&gt;</span><span class="na">getMetadata</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'title'</span><span class="p">));</span>
+</pre>
+</div>
+
+
+<h2>Resources</h2>
+
+<ul>
+<li><a href="http://www.hxa.name/articles/content/epub-guide_hxa7241_2007.html">http://www.hxa.name/articles/content/epub-guide_hxa7241_2007.html</a></li>
+</ul>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
