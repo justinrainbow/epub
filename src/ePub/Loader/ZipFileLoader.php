@@ -13,6 +13,7 @@ namespace ePub\Loader;
 
 use ePub\Resource\ZipFileResource;
 use ePub\Resource\OpfResource;
+use ePub\Resource\NcxResource;
 use ePub\Definition\Manifest;
 use ePub\Definition\ManifestItem;
 use ePub\Definition\Metadata;
@@ -43,6 +44,10 @@ class ZipFileLoader
 
         $opfResource = new OpfResource($data, $resource);
         $package = $opfResource->bind();
+        
+        $ncx = $resource->get($package->navigation->src->href);
+        $ncxResource = new NcxResource($ncx);
+        $package = $ncxResource->bind($package);
 
         return $package;
     }
