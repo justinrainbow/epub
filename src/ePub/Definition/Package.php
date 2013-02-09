@@ -15,6 +15,8 @@ use ePub\Definition\ManifestItem;
 
 class Package
 {
+    public $version;
+    
     public $metadata;
 
     public $manifest;
@@ -22,13 +24,16 @@ class Package
     public $spine;
 
     public $guide;
+    
+    public $navigation;
 
     public function __construct()
     {
-        $this->manifest = new Manifest();
-        $this->metadata = new Metadata();
-        $this->spine    = new Spine();
-        $this->guide    = new Guide();
+        $this->manifest   = new Manifest();
+        $this->metadata   = new Metadata();
+        $this->spine      = new Spine();
+        $this->guide      = new Guide();
+        $this->navigation = new Navigation();
     }
 
     public function getMetadata()
@@ -49,5 +54,10 @@ class Package
     public function getGuide()
     {
         return $this->guide;
+    }
+    
+    public function getNavigation()
+    {
+        return $this->navigation;
     }
 }

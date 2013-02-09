@@ -11,6 +11,8 @@
 
 namespace ePub\Tests;
 
+use ePub\Reader;
+
 abstract class BaseTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -35,5 +37,22 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
     public function getFixture($name)
     {
         return file_get_contents($this->getFixturePath($name));
+    }
+    
+    /**
+     * Locates a fixture and returns the Package
+     *
+     * @param string $name Partial path to fixture
+     *
+     * @return Package
+     */
+    public function getFixtureEpub($name)
+    {
+        $fixture = $this->getFixturePath($name);
+        
+        $reader = new Reader();
+        $epub   = $reader->load($fixture);
+        
+        return $epub;
     }
 }
