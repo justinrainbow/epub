@@ -126,7 +126,9 @@ class OpfResource
         
         $ncxId = ($xml['toc']) ? (string) $xml['toc'] : 'ncx';
         
-        $navigation->src = $manifest->get($ncxId);
+        if ($manifest->has($ncxId)) {
+            $navigation->src = $manifest->get($ncxId);
+        }
     }
 
     private function processGuideElement(SimpleXMLElement $xml, Guide $guide)

@@ -6,6 +6,7 @@ namespace ePub\Resource;
 use SimpleXMLElement;
 use ePub\Definition\Package;
 use ePub\Definition\Chapter;
+use ePub\Exception\InvalidArgumentException;
 
 
 class NcxResource
@@ -35,7 +36,7 @@ class NcxResource
         } else if (is_string($data)) {
             $this->xml = new SimpleXMLElement($data);
         } else {
-            throw new InvalidArgumentException(sprintf('Invalid data type for OpfResource'));
+            throw new InvalidArgumentException(sprintf('Invalid data type for NcxResource'));
         }
         
         $this->namespaces = $this->xml->getNamespaces(true);
