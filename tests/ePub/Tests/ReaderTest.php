@@ -16,7 +16,7 @@ use ePub\Reader;
 
 class ReaderTest extends BaseTest
 {
-    public function testBasicIntstantiation()
+    public function testBasicInstantiation()
     {
         $this->assertTrue(new Reader instanceof Reader);
     }
