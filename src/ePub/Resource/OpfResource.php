@@ -72,6 +72,9 @@ class OpfResource
         $package = $package ?: new Package();
         $xml     = $this->xml;
 
+        // Epub version:
+        $package->version = (string) $xml['version'];
+        
         $this->processMetadataElement($xml->metadata, $package->metadata);
         $this->processManifestElement($xml->manifest, $package->manifest);
         $this->processSpineElement($xml->spine, $package->spine, $package->manifest);

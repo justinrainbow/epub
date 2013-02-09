@@ -22,6 +22,8 @@ class Package
     public $spine;
 
     public $guide;
+    
+    public $version;
 
     public function __construct()
     {
