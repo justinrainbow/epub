@@ -27,7 +27,8 @@ class WriterTest extends BaseTest
         $this->assertTrue($epub instanceof \ePub\Definition\Package);
 
         $dumper = new OpfResourceDumper($epub);
-        echo $dumper->dump();
+        // This looks like a WIP, let's comment it out for now:
+        // echo $dumper->dump();
     }
 
     public function testReadingManifestItemContent()

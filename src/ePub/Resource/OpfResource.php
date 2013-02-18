@@ -21,6 +21,7 @@ use ePub\Definition\ManifestItem;
 use ePub\Definition\Spine;
 use ePub\Definition\Guide;
 use ePub\Definition\GuideItem;
+use ePub\Definition\Navigation;
 use ePub\Exception\InvalidArgumentException;
 
 
@@ -72,9 +73,12 @@ class OpfResource
         $package = $package ?: new Package();
         $xml     = $this->xml;
 
+        // Epub version:
+        $package->version = (string) $xml['version'];
+        
         $this->processMetadataElement($xml->metadata, $package->metadata);
         $this->processManifestElement($xml->manifest, $package->manifest);
-        $this->processSpineElement($xml->spine, $package->spine, $package->manifest);
+        $this->processSpineElement($xml->spine, $package->spine, $package->manifest, $package->navigation);
 
         if ($xml->guide) {
             $this->processGuideElement($xml->guide, $package->guide);
@@ -112,12 +116,18 @@ class OpfResource
         }
     }
 
-    private function processSpineElement(SimpleXMLElement $xml, Spine $spine, Manifest $manifest)
+    private function processSpineElement(SimpleXMLElement $xml, Spine $spine, Manifest $manifest, Navigation $navigation)
     {
         foreach ($xml->itemref as $child) {
             $id = (string) $child['idref'];
 
             $spine->add($manifest->get($id));
+        }
+        
+        $ncxId = ($xml['toc']) ? (string) $xml['toc'] : 'ncx';
+        
+        if ($manifest->has($ncxId)) {
+            $navigation->src = $manifest->get($ncxId);
         }
     }
 
