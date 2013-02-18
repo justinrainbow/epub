@@ -1,10 +1,10 @@
 {
-	"name": "justinrainbow/epub",
-	"require": {
-		"php":      ">=5.3.2"
-	},
-
-	"autoload": {
-		"psr-0": { "ePub": "src/" }
-	}
+    "name": "justinrainbow/epub",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "autoload": {
+        "psr-0": { "ePub": "src/" }
+    }
 }
