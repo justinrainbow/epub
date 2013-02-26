@@ -46,4 +46,13 @@ class ReaderTest extends BaseTest
         $epub = $this->getFixtureEpub('the_velveteen_rabbit.epub');
         $this->assertEquals('2.0', $epub->version);
     }
+    
+    public function testReadingOpfDirectory()
+    {
+        $epub = $this->getFixtureEpub('the_velveteen_rabbit.epub');
+        $this->assertEquals('.', $epub->opfDirectory);
+        
+        $epub = $this->getFixtureEpub('epub3_nested_nav.epub');
+        $this->assertEquals('EPUB', $epub->opfDirectory);
+    }
 }
