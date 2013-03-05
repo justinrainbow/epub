@@ -17,6 +17,8 @@ class Package
 {
     public $version;
     
+    public $opfDirectory;
+    
     public $metadata;
 
     public $manifest;
