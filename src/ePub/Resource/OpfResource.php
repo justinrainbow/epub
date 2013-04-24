@@ -19,6 +19,7 @@ use ePub\Definition\MetadataItem;
 use ePub\Definition\Manifest;
 use ePub\Definition\ManifestItem;
 use ePub\Definition\Spine;
+use ePub\Definition\SpineItem;
 use ePub\Definition\Guide;
 use ePub\Definition\GuideItem;
 use ePub\Definition\Navigation;
@@ -118,10 +119,28 @@ class OpfResource
 
     private function processSpineElement(SimpleXMLElement $xml, Spine $spine, Manifest $manifest, Navigation $navigation)
     {
+        $position = 1;
         foreach ($xml->itemref as $child) {
             $id = (string) $child['idref'];
+            $manifestItem = $manifest->get($id);
+            if (!$linear = $child['linear']) {
+                $linear = 'yes';
+            }
 
-            $spine->add($manifest->get($id));
+            $item = new SpineItem();
+
+
+            $item->id     = $id;
+            $item->type   = $manifestItem->type;
+            $item->href   = $manifestItem->href;
+            $item->order  = $position;
+            $item->linear = $linear;
+
+            $this->addContentGetter($item);
+
+            $spine->add($item);
+
+            $position++;
         }
         
         $ncxId = ($xml['toc']) ? (string) $xml['toc'] : 'ncx';
