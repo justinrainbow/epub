@@ -55,4 +55,11 @@ class ReaderTest extends BaseTest
         $epub = $this->getFixtureEpub('epub3_nested_nav.epub');
         $this->assertEquals('EPUB', $epub->opfDirectory);
     }
+
+    public function testLoadingNamespacedContainer()
+    {
+        $epub = $this->getFixtureEpub('pg19132.epub');
+
+        $this->assertTrue($epub instanceof \ePub\Definition\Package);
+    }
 }
