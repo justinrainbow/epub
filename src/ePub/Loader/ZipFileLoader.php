@@ -33,7 +33,13 @@ class ZipFileLoader
 
         $package = $resource->getXML('META-INF/container.xml');
 
-        $opfFile = (string) $package->rootfiles->rootfile['full-path'];
+        if (!$opfFile = (string) $package->rootfiles->rootfile['full-path']) {
+            $ns = $package->getNamespaces();
+            foreach ($ns as $key => $value) {
+                $package->registerXPathNamespace($key, $value);
+                $opfFile = (string) $package->xpath('//'. $key .':rootfile/@full-path')[0]['full-path'];
+            }
+        }
 
         $data = $resource->get($opfFile);
 
