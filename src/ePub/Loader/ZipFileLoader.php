@@ -37,7 +37,8 @@ class ZipFileLoader
             $ns = $package->getNamespaces();
             foreach ($ns as $key => $value) {
                 $package->registerXPathNamespace($key, $value);
-                $opfFile = (string) $package->xpath('//'. $key .':rootfile/@full-path')[0]['full-path'];
+                $items = $package->xpath('//'. $key .':rootfile/@full-path');
+                $opfFile = (string) $items[0]['full-path'];
             }
         }
 
