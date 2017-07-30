@@ -51,7 +51,7 @@ $loader->registerNamespaces(array(
 $reader = new \ePub\Reader();
 $epub = $reader->load('my-book.epub');
 
-printf("Title: %s\n", $epub->getMetadata()->get('title'));
+printf("Title: %s\n", $epub->getMetadata()->getValue('title'));
 ```
 
 
